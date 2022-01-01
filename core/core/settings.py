@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -114,5 +115,14 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/login/'
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 AUTH_USER_MODEL = 'users.CustomUser'
+
+env = environ.Env()
+environ.Env.read_env()
+
+TWILIO_TOKEN = env('TWILIO_TOKEN')
+TWILIO_SID = env('TWILIO_SID')
+TWILIO_NUMBER = env('TWILIO_NUMBER')

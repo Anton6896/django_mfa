@@ -4,6 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 from .codes.forms import CodeForm
 from django.contrib.auth import get_user_model
+from . import utils
 
 
 @login_required
@@ -36,10 +37,10 @@ def verify_view(request):
         user = get_user_model().objects.get(pk=request.session['user_pk'])
         verification_code = user.verification_code.code
 
-        sms_msg = f"{user.username} enter this code : {verification_code}"
-        print(f'sms_msg : {sms_msg}')
         if not request.POST:
-            pass  # send sms
+            sms_msg = f"{user.username} enter this code : {verification_code}"
+            res = utils.twilio_send_sms(sms_msg, user.phone_number)
+            print(res)
 
         if form.is_valid():
             code_from_form = form.cleaned_data.get('code')
