@@ -46,7 +46,7 @@ def verify_view(request):
 
             if str(verification_code) == str(code_from_form):
                 login(request, user)
-                return redirect('verified_view')
+                return redirect('home_view')
             else:
                 return redirect('auth_view')
 
